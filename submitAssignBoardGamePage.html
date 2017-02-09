@@ -1,0 +1,187 @@
+<!DOCTYPE html> 
+<html>
+<!-- BIT695 Web Technologies -->
+<head>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="set_form_date.js"></script>
+  <meta charset="utf-8">
+  <title>Board games aficionados Game Assignment Management</title>
+  <script type="text/javascript">
+
+  function validate()
+  {
+    var result = validateID() + validateGameID() + validatePlayerID();
+    if (result == "")
+    {
+      return true;        
+    }
+    else
+    {
+      alert("Errors: \n" + result);
+      return false;
+    }
+  }
+
+  function validateID()
+  {   
+    var ID = document.getElementById('assignmentID').value;  
+    if (ID.length == 0)
+    {     
+      return "Assignment ID length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validateGameID()
+  {   
+    var ID = document.getElementById('gameID').value;  
+    if (ID.length == 0)
+    {     
+      return "Board Game ID length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validatePlayerID()
+  {   
+    var ID = document.getElementById('playerID').value;  
+    if (ID.length == 0)
+    {     
+      return "Player ID length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validateBlank()
+  {
+    var inputVal = document.getElementById('searchedAssignmentTermInput').value;
+    if (inputVal.length == 0)
+    {
+      alert("Error: Input is blank");
+      return false;
+    } else
+    {      
+      return true;
+    }
+  }
+
+  function validateValueDelete()
+  {
+    var inputVal = document.getElementById('deleteAssignmentID').value;
+    if (inputVal.length == 0)
+    {
+      alert("Error: Input is blank");
+      return false;
+    } else
+    {      
+      return true;
+    }
+  }
+  </script>
+
+
+</head>
+
+<body>
+  <header>
+    <h1>Board games aficionados</h1>
+    <nav id="follow_me">
+      <ul>
+        <li><a href="Events.html">Weekly Calender</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="submitMemberPage.html">Member Managment</a></li>
+        <li><a href="submitBoardGamePage.html">Board Game Management</a></li>      
+        <li><a href="submitSchedulePage.html">Schedule Management</a></li>
+        <li><a href="submitScorePage.html">Scoreing Managment</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>    
+
+    <img id="left_bar" src="index_sidebar.gif" alt="left bar"> 
+    <img id="right_bar" src="index_sidebar-r.gif" alt="right bar"> 
+    
+    <section>
+      <h1>Board Game Assignment Management</h1>
+    </section>
+   
+
+    <section>
+      <h3>Add Board Game Assignment</h3>
+
+      <form name="submitNewBoardGameAssignment" onsubmit="return validate();" action="AssignBoardGame_storeInDatabase.php" method="post" >
+
+        <table>
+          <tr><td>Board Game Assignment ID</td><td><input type="text" name="assignmentID" id="assignmentID" size="20" maxlength="20"/></td>
+          </tr>
+
+          <tr><td>Game ID</td><td><input type="text" name="gameID" id="gameID" size="20" maxlength="20"/></td>
+          </tr>
+
+          <tr><td>Player ID</td><td><input type="text" name="playerID" id="playerID" size="20" maxlength="20"/></td>
+          </tr>
+        </table>
+
+        <input type="submit" name="formSubmit" value="Submit"/>
+      </form>
+
+      <form name="retrieveAll" action="Member_retrieveAll.php" method="post">
+        <input type="submit" name="retrieveAllSubmit" value="Retrieve All Members"/>
+      </form>
+
+      <form name="retrieveAllGames" action="BoardGames_retrieveAll.php" method="post">
+        <input type="submit" name="retrieveAllSubmitGames" value="Retrieve All Board Games"/>
+      </form>      
+    </section>
+
+
+    <section>
+      <h3>Retrieve Board Game Assignment Information</h3>
+      <form name="retrieveByID" onsubmit="return validateBlank()" action="AssignBoardGames_retrieveSpecificGame.php" method="post">
+        <table>
+          <tr><td>Input: </td><td><input type="text" id="searchedAssignmentTermInput" name="searchedAssignmentTermInput" size="20" maxlength="20"/></td>
+            <td>Search field: </td><td>
+            <select name="searchedAssignmentCatogoryInput">
+              <option value="assignmentID">Assignment ID</option>
+              <option value="gameID">Game ID</option>
+              <option value="playerID">Player ID</option>              
+            </select>
+          </td></tr>
+        </table>
+        <input type="submit" name="findDetailsSubmit" value="Submit"/>
+      </form>      
+      <form name="retrieveAllGameAssignments" action="AssignBoardGames_retrieveAll.php" method="post">
+        <input type="submit" name="retrieveAllSubmitGames" value="Retrieve All Board Game Assignments"/>
+      </form>      
+    </section>
+
+
+    <section>
+      <h3>Delete Board Assignment</h3>
+      <form name="deleteAssignment" onsubmit="return validateValueDelete()" action="AssignBoardGame_deleteAssignment.php" method="post">
+        <table>
+          <tr>
+            <td>Board Game Assignment ID: </td>
+            <td><input type="text" id="deleteAssignmentID" name="deleteAssignmentID" size="12" maxlength="20" /></td>
+            <td><input type="submit" name="deleteAssignmentButt" value="Delete" /></td>
+          </tr>
+        </table>
+      </form>
+    </section>
+
+
+  </main>
+  <footer>
+    <p><i>Board games aficionados</i></p><p>1970-2015</p> 
+  </footer>
+</body>
+</html>

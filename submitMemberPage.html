@@ -1,0 +1,294 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="set_form_date.js"></script>
+  <meta charset="utf-8">
+  <title>Board games aficionados</title>
+  <script type="text/javascript">
+
+  function validate()
+  {
+   var result = validateID() + validateFName() + validateLName() + validateEMail() +  validatePhone();
+   if (result == "")
+   {
+    return true;        
+  }
+  else
+  {
+    alert("Errors: \n" + result);
+    return false;
+  }
+}
+
+function validateUpdateMember()
+{
+    //
+    var memID = document.getElementById('updateIDInput').value;
+    var uft = document.getElementById('updateFieldInput').value;
+    var Uinput = document.getElementById('updateIDInputText').value;
+    if (memID.length == 0)
+    {
+      alert("Member ID feild is empty");
+      return false;
+    } 
+    else
+    {
+      if (uft == "firstName" || uft == "familyName")
+      {
+        if (Uinput.length == 0)
+        {
+          alert("New value field is empty. Please enter name value");
+          return false;
+        } else
+        {
+          return true;
+        }
+      }         
+      else if (uft == "email")
+      {
+        var re = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/
+        if (!re.exec(Uinput))
+        {     
+          alert("Incorrect Email format/value provided");
+          return false;
+        }
+        else 
+        {
+          return true;
+        }
+      }
+      else
+      {        
+        var re = /^(\d{2,3}\d{3}\d{4})$/
+        if (!re.exec(Uinput))
+        {     
+          alert("Incorrect Phone Number format. Please use XXXXXXXXX or XXXXXXXXXX format");
+          return false;
+        }
+        else 
+        {
+          return true;
+        }
+      }
+    }    
+  }
+
+  function validateDelete()
+  {
+    var inputVal = document.getElementById('deleteInputID').value;
+    if (inputVal.length == 0)
+    {
+      alert("Error: Input is blank");
+      return false;
+    } else
+    {      
+      return true;
+    }
+  }
+
+  function validateBlank()
+  {
+    var inputVal = document.getElementById('searchedTerm').value;
+    if (inputVal.length == 0)
+    {
+      alert("Error: Input is blank");
+      return false;
+    } else
+    {      
+      return true;
+    }
+  }
+
+  function validateID()
+  {   
+    var ID = document.getElementById('memberId').value;  
+    if (ID.length == 0)
+    {     
+      return "Memeber ID length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validateFName()
+  {   
+    var fName = document.getElementById('firstName').value;  
+    if (fName.length == 0)
+    {     
+      return "First name length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validateLName()
+  {   
+    var lName = document.getElementById('familyName').value;  
+    if (lName.length == 0)
+    {     
+      return "Family name length is zero\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validateEMail()
+  {   
+    var email = document.getElementById('email').value;  
+    var re = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/
+
+    if (!re.exec(email))
+    {     
+      return "Incorrect Email format\n";
+    }
+    else 
+    {
+      return "";
+    }
+  }
+
+  function validatePhone()
+  {   
+    var phoneNum = document.getElementById('phone').value;  
+    var re = /^(\d{2,3}\d{3}\d{4})$/
+  //var re = /^(\d{2,3}(-|\s)\d{3}(-|\s)\d{4})$/
+  if (!re.exec(phoneNum))
+  {     
+    return "Incorrect Phone Number format. Please use XXXXXXXXX or XXXXXXXXXX format\n";
+  }
+  else 
+  {
+    return "";
+  } 
+}
+</script>
+</head>
+
+
+<body>
+
+  <header>
+    <h1>Board games aficionados</h1>
+    <nav id="follow_me">
+      <ul>
+        <li><a href="Events.html">Weekly Calender</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="submitBoardGamePage.html">Board Game Management</a></li>      
+        <li><a href="submitAssignBoardGamePage.html">Player Assignment</a></li>
+        <li><a href="submitSchedulePage.html">Schedule Management</a></li>
+        <li><a href="submitScorePage.html">Scoreing Managment</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+
+    <img id="left_bar" src="index_sidebar.gif" alt="left bar"> 
+    <img id="right_bar" src="index_sidebar-r.gif" alt="right bar"> 
+    
+    <section>
+      <h1>Membership Administration</h1>
+    </section>
+    
+    
+    <section>
+      <h3>Sign up form</h3>
+
+      <form name="submitNewMember" onsubmit="return validate();" action="Memeber_storeInDatabase.php" method="post" >
+
+        <table>
+          <tr><td>Member ID</td><td><input type="text" name="memberID" id="memberId" size="20" maxlength="20"/></td>
+          </tr>
+
+          <tr><td>First name</td><td><input type="text" name="firstName" id="firstName" size="20" maxlength="25"/></td>
+          </tr>
+
+          <tr><td>Family name</td><td><input type="text" name="familyName" id="familyName" size="20" maxlength="25"/></td>
+          </tr>
+
+          <tr><td>Email</td><td><input type="text" name="email" id="email" size="20" maxlength="25"/></td>
+          </tr>
+
+          <tr><td>Phone</td><td><input type="text" name="phone" id="phone" size="20" maxlength="15"/> </td>
+          </tr>
+        </table>
+        <input type="submit" name="formSubmit" value="Submit"/>
+      </form>
+    </section>
+
+
+    <section>
+      <h3>Retrieve Member Information</h3>
+      <form name="retrieveByID" onsubmit="return validateBlank()" action="Member_retrieveMember.php" method="post">
+        <table>
+          <tr><td>Input: </td><td><input type="text" id="searchedTerm" name="searchedTerm" size="20" maxlength="30"/></td>
+            <td>Search field: </td><td>
+            <select name="searchedFieldInput">
+              <option value="memberID">Member ID</option>
+              <option value="firstName">First Name</option>
+              <option value="familyName">Family Name</option>
+              <option value="email">Email</option>
+            </select>
+          </td></tr>
+        </table>
+        <input type="submit" name="findDetailsSubmit" value="Submit"/>
+      </form>
+
+      <form name="retrieveAll" action="Member_retrieveAll.php" method="post">
+        <input type="submit" name="retrieveAllSubmit" value="Retrieve All Members"/>
+      </form>
+    </section>
+
+
+    <section>
+      <h3>Update Member Information</h3>
+      <form name="updateMember" onsubmit="return validateUpdateMember()" action="Member_update.php" method="post">
+        <table>
+          <tr>
+            <td>Member ID: </td><td><input type="text" id="updateIDInput" name="updateIDInput" size="12" maxlength="30"/></td>
+            <td>Field: </td>
+            <td>
+              <select name="updateFieldInput" id="updateFieldInput">                
+                <option value="firstName">First Name</option>
+                <option value="familyName">Family Name</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone Number</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>New value: </td>
+            <td><input type="text" id="updateIDInputText" name="updateIDInputText" size="20" maxlength="30"/></td>
+            <td><input type="submit" name="updateMember" value="Submit"/></td><td></td>
+          </tr>
+        </table>
+      </form>
+    </section>
+
+
+    <section>
+      <h3>Delete Member</h3>
+      <form name="deleteMember" onsubmit="return validateDelete()" action="Member_deleteMember.php" method="post">
+        <table>
+          <tr>
+            <td>Member ID: </td>
+            <td><input type="text" id="deleteInputID" name="deleteInputID" size="12" maxlength="30" /></td>
+            <td><input type="submit" name="deleteMemberButt" value="Delete" /></td>
+          </tr>
+        </table>
+      </form>
+    </section>
+
+  </main>
+  <footer>
+    <p><i>Board games aficionados</i></p><p>1970-2015</p>
+  </footer>
+</body>
+</html>

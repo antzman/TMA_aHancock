@@ -1,0 +1,48 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "aHancockDB6";
+
+//Retrieves specific board game
+
+if($_POST['findDetailsSubmit'] == "Submit")
+{
+	$category = test_input($_POST['searchedGameFieldInput']);
+	$term = test_input($_POST['searchedGameTerm']);
+}
+
+//This is here for security. It is important to strip the text to avoid security exploits
+function test_input($data)
+{
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "SELECT * FROM `BoardGames` WHERE $category LIKE '%{$term}%'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "BoardGame ID: " . $row["gameID"]. "     Game: " . $row["game"]. "   Owner ID: " . $row["owner"] . "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+
+
+
+
+$conn->close();
+?>
